@@ -4,6 +4,6 @@ const (
 	DBHost     = "localhost"
 	DBPort     = 5432
 	DBUser     = "postgres"
-	DBPassword = "root"
+	DBPassword = "050502"
 	DBName     = "api-builder"
 )

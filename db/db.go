@@ -4,7 +4,9 @@ import (
 	"fmt"
 
 	"github.com/jeksilaen/api-builder/config"
-	"github.com/jeksilaen/api-builder/modules/user/models"
+	userModels "github.com/jeksilaen/api-builder/modules/user/models"	
+	collectionModels"github.com/jeksilaen/api-builder/modules/collection/models"	
+	requestModels"github.com/jeksilaen/api-builder/modules/request/models"	
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -21,8 +23,8 @@ func InitDB() error {
 		return err
 	}
 
-	// Migrasi User Model
-	err = db.AutoMigrate(&models.User{})
+	// Migrasi Model
+	err = db.AutoMigrate(&userModels.User{}, &collectionModels.Collection{}, &requestModels.Request{})
 	if err != nil {
 		return err
 	}

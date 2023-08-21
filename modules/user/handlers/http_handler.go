@@ -5,14 +5,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/jeksilaen/api-builder/middlewares"
+	// "github.com/jeksilaen/api-builder/middlewares"
 	"github.com/jeksilaen/api-builder/modules/user/helpers"
 	"github.com/jeksilaen/api-builder/modules/user/models"
 	"github.com/jeksilaen/api-builder/modules/user/usecases"
 )
 
 func InitUserHttpHandler(router *gin.Engine) {
-	router.POST("/users/v1/login", middlewares.VerifyToken, LoginUser)
+	router.POST("/users/v1/login", LoginUser)
 	router.POST("/users/v1/register", RegisterUser)
 }
 
