@@ -51,7 +51,19 @@ func (uc *RequestCommandUsecase) GetRequestByCollectionID(collectionID string) (
 }
 
 func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models.Request, error) {
-	
+	if request.URL == "" {
+		// URL is empty, create a record in the database with an empty response
+		request.Response = make(models.JSONMap) // or initialize as needed
+		err := uc.DB.Create(request).Error
+		if err != nil {
+			if strings.Contains(err.Error(), "invalid input syntax for type uuid") {
+				return nil, errors.New("User Id Not Found")
+			}
+			log.Println("Error creating request:", err)
+			return nil, err
+		}
+		return request, nil
+	}
 	if request.Method == "GET" {
 		req, err := http.NewRequest("GET", request.URL, nil)		
 
@@ -200,7 +212,19 @@ func (uc *RequestCommandUsecase) GetRequestByIDWithoutPreload(requestID string) 
 }
 
 func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models.Request, error) {
-	
+	if request.URL == "" {
+		// URL is empty, create a record in the database with an empty response
+		request.Response = make(models.JSONMap) // or initialize as needed
+		err := uc.DB.Create(request).Error
+		if err != nil {
+			if strings.Contains(err.Error(), "invalid input syntax for type uuid") {
+				return nil, errors.New("User Id Not Found")
+			}
+			log.Println("Error creating request:", err)
+			return nil, err
+		}
+		return request, nil
+	}
 	if request.Method == "GET" {
 		req, err := http.NewRequest("GET", request.URL, nil)		
 
