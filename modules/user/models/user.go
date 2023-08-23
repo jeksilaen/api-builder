@@ -27,6 +27,7 @@ type LoginRequest struct {
 type SucessRegistrationResponse struct {
 	Message string       `json:"message"`
 	Data    UserResponse `json:"data"`
+	Token   string       `json:"token"`
 	Links   []Link       `json:"links"`
 }
 

@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "a7ae536e-7b67-472b-a365-bcedb784f623",
+		"name": "Api-Builder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "5843926"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "bkhbf8q3fbkqb-bjhefb83yfebjh-7hjebfq3748i",
+						"username": "codebase"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"luthfi@gmail.com\",\n    \"password\": \"testestes\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"luthfi@gmail.com\",\n    \"username\": \"luthfi\",\n    \"password\": \"testestes\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzU5NzUsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.79Zv3bizDAT5JbBnfX0EnSl59ULJA9g4D6c9HaOMq-w"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/users/v1/collection/1ab141d0-c389-4f8c-85cd-19d8dcc46923"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzU5NzUsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.79Zv3bizDAT5JbBnfX0EnSl59ULJA9g4D6c9HaOMq-w"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"UserID\": \"3e0daddb-b6da-4506-8d5b-cba4c8c988a5\",\n    \"name\": \"API-BUILDER 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/collection"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzU5NzUsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.79Zv3bizDAT5JbBnfX0EnSl59ULJA9g4D6c9HaOMq-w"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"name\": \"Api Builder Update 2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/collection/c654a7bd-a4e8-4159-85ce-1286499ed6a7"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Collection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTEyOTQ1NzEsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.khzqCrlIi9zXgjdFVV1n4pOTvGfxPsEQR1NH3dBA9NE"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/users/v1/collection/c654a7bd-a4e8-4159-85ce-1286499ed6a7"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Request By Collection Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzU5NzUsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.79Zv3bizDAT5JbBnfX0EnSl59ULJA9g4D6c9HaOMq-w"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/users/v1/requestByCollection/902fdc12-1bd5-4bb1-9f52-9fe3b71005d6"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Request By Request Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Add Get Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTEyOTQ1NzEsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.khzqCrlIi9zXgjdFVV1n4pOTvGfxPsEQR1NH3dBA9NE"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"CollectionID\": \"c654a7bd-a4e8-4159-85ce-1286499ed6a7\",\n    \"name\": \"Test Get\",\n    \"method\": \"GET\",\n    \"bearer_token\": \"\",\n    \"url\": \"http://localhost:8000/api/profile\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Post Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTEyOTQ1NzEsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.khzqCrlIi9zXgjdFVV1n4pOTvGfxPsEQR1NH3dBA9NE"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"CollectionID\": \"ccce0e50-e85f-40b5-a125-a4b28476b91c\",\n    \"name\": \"Test POST Salah\",\n    \"method\": \"POST\",\n    \"url\": \"http://localhost:8000/api/payments\",\n    \"bearer_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2E5MjYyNjNkZDZkMzI2NTExNzdjNWY4YWFmZjFmZjgyZjhmMmM4NDY1NmI2MzdmNmVhZDJiMGZiMTdhMmFkZjk4OWNiYjY0YzM1NWYyNzYiLCJpYXQiOjE2OTEyMDc2MzAuNzM0NTA4LCJuYmYiOjE2OTEyMDc2MzAuNzM0NTA5LCJleHAiOjE3MjI4MzAwMzAuNzI1NjU5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.lAsaxqt5bFgCmx50RgAkNR9MiM305GLdCLGu0obR7PCzQJhBXcZvaqW2urc06qg83i-MDAMhynj7xvCL__g7d7-4B08GjZlhjwJ1xYKEz_zGIlaWO80NpoBPz8OA4_q_UeOS0p3Z_s8Ipcpdnto27gZmxAgoFffNOsOzBLiMQxF_0Ebxhy8jWZzq6nJoVOD7tySYKgUZgs5fQ0AR3T8c11inK5DwtiTH1z_vFQc4VR5Zfsa6J_C-nEllbm6dRcGeeJ56iYukH9-3zvBjxSN6FSt2TE8RVf293FFoAEB3yMOgXLRrcOzUtec8oELWgcquQZD9wcYWFfSWAPyVmK-GHcdf-tr9mGVD4WO9YCByAkaX5cs9sDe5ikjX5P_yQCdMN4KhN23LrCDcHDQdAD28o_leYCYnU3ax8o2XwrUxJcCpkCzYvu70bg4mWD4eBKzjBvJ4_1FTJDGoL8w5OjsDDxKFN3wawACYz12Xfg3hNY0zYv55UKiHytTsDtRRJSJ9pvljCvh6TB_mCpRr2vkK9D0GmhrVhx_DpNbS9yvLrFWNElZZDjLYyltezxnq0nO_efhZDVFA7R61Pg6XSMKJeVzwqgZ9FmZECsca5o4QbZZSbYetncbTMsmv-JNUNHWNeE4PmG5NJ0n2PyPWjeM_m0iGbR8D1WJmyJVZHPGTl2I\",\n    \"payload\": {    \n        \"user_id\": 1,\n        \"bills_id\": 4,\n        \"description\": \"Loan Bills\",\n        \"nominal\": 91666,\n        \"status\": \"Unpaid\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Update Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA4ODg0MTksInVzZXJJRCI6IjFhYjE0MWQwLWMzODktNGY4Yy04NWNkLTE5ZDhkY2M0NjkyMyJ9.PhZl-Buo0aSTxk3vfkxtVUGMToOICa4B7ISrKsKQkKU"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"CollectionID\": \"38e8ff2a-4bff-4ce9-b969-176dc939918f\",\n    \"name\": \"Test Update\",\n    \"method\": \"PUT\",\n    \"url\": \"http://localhost:8080/users/v1/collection/a1d05a94-6802-401d-b4ad-93a50dbc0c5b\",\n    \"payload\": {    \n            \"UserID\": \"1ab141d0-c389-4f8c-85cd-19d8dcc46923\",\n            \"name\": \"Update Lagi\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Delete Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTA4OTU2MjgsInVzZXJJRCI6IjFhYjE0MWQwLWMzODktNGY4Yy04NWNkLTE5ZDhkY2M0NjkyMyJ9.6TU6yvinrOxZnqoHdhUdxgRQ9SXJzZ17m-7rIrWfewE"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"CollectionID\": \"38e8ff2a-4bff-4ce9-b969-176dc939918f\",\n    \"name\": \"Test Update\",\n    \"method\": \"DELETE\",\n    \"url\": \"https://dummyjson.com/posts/1\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzU5NzUsInVzZXJJRCI6IjNlMGRhZGRiLWI2ZGEtNDUwNi04ZDViLWNiYTRjOGM5ODhhNSJ9.79Zv3bizDAT5JbBnfX0EnSl59ULJA9g4D6c9HaOMq-w"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{            \n            \"collection_id\": \"c654a7bd-a4e8-4159-85ce-1286499ed6a7\",\n            \"name\": \"Test Get\",\n            \"url\": \"https://dummyjson.com/products/2\",\n            \"method\": \"GET\",\n            \"payload\": null,\n            \"response\": {\n                \"brand\": \"Apple\",\n                \"category\": \"smartphones\",\n                \"description\": \"SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...\",\n                \"discountPercentage\": 17.94,\n                \"id\": 2,\n                \"images\": [\n                    \"https://i.dummyjson.com/data/products/2/1.jpg\",\n                    \"https://i.dummyjson.com/data/products/2/2.jpg\",\n                    \"https://i.dummyjson.com/data/products/2/3.jpg\",\n                    \"https://i.dummyjson.com/data/products/2/thumbnail.jpg\"\n                ],\n                \"price\": 899,\n                \"rating\": 4.44,\n                \"stock\": 34,\n                \"thumbnail\": \"https://i.dummyjson.com/data/products/2/thumbnail.jpg\",\n                \"title\": \"iPhone X\"        \n            }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users/v1/request/691a3e7d-1382-4cdb-93c0-4e2078bec251"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

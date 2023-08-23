@@ -32,6 +32,26 @@ func ReturnFailedLoginResponse(message string) *models.FailedResponse {
 }
 
 func ReturnSucessRegisterResponse(createdUser *models.User) *models.SucessRegistrationResponse {
+	token, err := middlewares.GenerateToken(createdUser.ID)
+
+	if err != nil {
+		return &models.SucessRegistrationResponse{
+			Message: "Registered user sucessfully",
+			Data: models.UserResponse{
+				ID:       createdUser.ID,
+				Email:    createdUser.Email,
+				Username: createdUser.Username,
+			},
+			Token: "Failed to generate token, please try again",
+			Links: []models.Link{
+				{
+					Rel:  "login",
+					Href: "/users/v1/login",
+				},
+			},
+		}
+	}
+
 	return &models.SucessRegistrationResponse{
 		Message: "Registered user sucessfully",
 		Data: models.UserResponse{
@@ -39,6 +59,7 @@ func ReturnSucessRegisterResponse(createdUser *models.User) *models.SucessRegist
 			Email:    createdUser.Email,
 			Username: createdUser.Username,
 		},
+		Token: token,
 		Links: []models.Link{
 			{
 				Rel:  "login",
