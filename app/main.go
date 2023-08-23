@@ -1,16 +1,25 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	db "github.com/jeksilaen/api-builder/db"
 	middlewares "github.com/jeksilaen/api-builder/middlewares"
-	userHandler "github.com/jeksilaen/api-builder/modules/user/handlers"
 	collectionHandler "github.com/jeksilaen/api-builder/modules/collection/handlers"
 	requestHandler "github.com/jeksilaen/api-builder/modules/request/handlers"
+	userHandler "github.com/jeksilaen/api-builder/modules/user/handlers"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := db.InitDB()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	err = db.InitDB()
 	if err != nil {
 		panic(err)
 	}
@@ -22,5 +31,10 @@ func main() {
 	collectionHandler.InitCollectionHttpHandler(router)
 	requestHandler.InitRequestHttpHandler(router)
 
-	router.Run("localhost:8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	router.Run("0.0.0.0:" + port)
 }

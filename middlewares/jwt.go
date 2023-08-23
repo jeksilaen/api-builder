@@ -3,6 +3,7 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var jwtSecret = []byte("your_secret_key_here")
+var jwtSecret = []byte(os.Getenv("SECRET_KEY"))
 
 func GenerateToken(userID string) (string, error) {
 	claims := jwt.MapClaims{
