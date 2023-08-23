@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	// "log"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,16 +10,16 @@ import (
 	collectionHandler "github.com/jeksilaen/api-builder/modules/collection/handlers"
 	requestHandler "github.com/jeksilaen/api-builder/modules/request/handlers"
 	userHandler "github.com/jeksilaen/api-builder/modules/user/handlers"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
-	err = db.InitDB()
+	err := db.InitDB()
 	if err != nil {
 		panic(err)
 	}
