@@ -1,9 +1,10 @@
 package helpers
 
-import (	
-	"log"
-	"github.com/jeksilaen/api-builder/modules/request/models"
+import (
 	"encoding/json"
+	"log"
+
+	"github.com/jeksilaen/api-builder/modules/request/models"
 )
 
 func ReturnSucessGetResponse(request []*models.Request) *models.SucessGetResponse {
@@ -21,12 +22,12 @@ func ReturnSucessGetResponse(request []*models.Request) *models.SucessGetRespons
 			return nil
 		}
 		requestResponses = append(requestResponses, models.RequestResponse{
-			ID:       request.ID,
-			CollectionID:   request.CollectionID,
-			Name:     request.Name,
-			URL:	request.URL,
-			Method:	request.Method,
-			BearerToken: request.BearerToken,
+			ID:           request.ID,
+			CollectionID: request.CollectionID,
+			Name:         request.Name,
+			URL:          request.URL,
+			Method:       request.Method,
+			BearerToken:  request.BearerToken,
 			Payload:      json.RawMessage(payloadDataBytes),
 			Response:     json.RawMessage(responseDataBytes),
 		})
@@ -46,7 +47,7 @@ func ReturnSucessGetResponse(request []*models.Request) *models.SucessGetRespons
 
 func ReturnFailedCreateRequestResponse(message string) *models.FailedResponse {
 	return &models.FailedResponse{
-		Error:   "Register failed",
+		Error:   "Create request failed",
 		Message: message,
 		Links: []models.Link{
 			{
@@ -115,7 +116,7 @@ func ReturnSucessCreateRequestResponse(createdRequest *models.Request) *models.S
 			BearerToken:  createdRequest.BearerToken,
 			Payload:      json.RawMessage(payloadDataBytes),
 			Response:     json.RawMessage(responseDataBytes),
-		},		
+		},
 	}
 }
 
@@ -169,16 +170,16 @@ func ReturnSucessUpdateRequestResponse(createdRequest *models.Request) *models.S
 			BearerToken:  createdRequest.BearerToken,
 			Payload:      json.RawMessage(payloadDataBytes),
 			Response:     json.RawMessage(responseDataBytes),
-		},		
+		},
 	}
 }
 
 func ReturnSucessDeleteResponse(request []*models.Request) *models.SucessDeleteResponse {
 	var requestResponses []models.DeleteResponse
 
-	for _, request := range request {		
+	for _, request := range request {
 		requestResponses = append(requestResponses, models.DeleteResponse{
-			ID:       request.ID,
+			ID: request.ID,
 		})
 	}
 

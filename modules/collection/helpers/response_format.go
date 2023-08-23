@@ -1,17 +1,30 @@
 package helpers
 
-import (	
+import (
 	"github.com/jeksilaen/api-builder/modules/collection/models"
 )
 
 func ReturnFailedCreateResponse(message string) *models.FailedResponse {
 	return &models.FailedResponse{
-		Error:   "Create failed",
+		Error:   "Create collection failed",
 		Message: message,
 		Links: []models.Link{
 			{
-				Rel:  "create collection",
-				Href: "/users/v1/collection",
+				Rel:  "Create collection",
+				Href: "/collection/v1",
+			},
+		},
+	}
+}
+
+func ReturnFailedUpdateResponse(message string) *models.FailedResponse {
+	return &models.FailedResponse{
+		Error:   "Update collection failed",
+		Message: message,
+		Links: []models.Link{
+			{
+				Rel:  "Create collection",
+				Href: "/collection/v1",
 			},
 		},
 	}
@@ -19,16 +32,33 @@ func ReturnFailedCreateResponse(message string) *models.FailedResponse {
 
 func ReturnSucessCreateResponse(createdCollection *models.Collection) *models.SucessCreateResponse {
 	return &models.SucessCreateResponse{
-		Message: "Create Collection sucessfully",
+		Message: "Created Collection sucessfully",
 		Data: models.CollectionResponse{
-			ID:       createdCollection.ID,
-			UserID:       createdCollection.UserID,
-			Name:    createdCollection.Name,			
+			ID:     createdCollection.ID,
+			UserID: createdCollection.UserID,
+			Name:   createdCollection.Name,
 		},
 		Links: []models.Link{
 			{
-				Rel:  "Create collection",
-				Href: "/users/v1/request",
+				Rel:  "Create request",
+				Href: "/request/v1",
+			},
+		},
+	}
+}
+
+func ReturnSucessUpdateResponse(createdCollection *models.Collection) *models.SucessCreateResponse {
+	return &models.SucessCreateResponse{
+		Message: "Updated Collection sucessfully",
+		Data: models.CollectionResponse{
+			ID:     createdCollection.ID,
+			UserID: createdCollection.UserID,
+			Name:   createdCollection.Name,
+		},
+		Links: []models.Link{
+			{
+				Rel:  "Create request",
+				Href: "/request/v1",
 			},
 		},
 	}
@@ -39,9 +69,9 @@ func ReturnSucessGetResponse(collections []*models.Collection) *models.SucessGet
 
 	for _, collection := range collections {
 		collectionResponses = append(collectionResponses, models.CollectionResponse{
-			ID:       collection.ID,
-			UserID:   collection.UserID,
-			Name:     collection.Name,
+			ID:     collection.ID,
+			UserID: collection.UserID,
+			Name:   collection.Name,
 		})
 	}
 
@@ -50,21 +80,21 @@ func ReturnSucessGetResponse(collections []*models.Collection) *models.SucessGet
 		Data:    collectionResponses,
 		Links: []models.Link{
 			{
-				Rel:  "get collection",
-				Href: "/users/v1/collection",
+				Rel:  "Get request",
+				Href: "/request/collection/v1/:collection_id",
 			},
 		},
 	}
 }
 
 func ReturnSucessDeleteResponse(message string) *models.SucessDeleteResponse {
-    return &models.SucessDeleteResponse{
-        Message: message,
-        Links: []models.Link{
-            {
-                Rel:  "create collection",
-                Href: "/users/v1/collection",
-            },
-        },
-    }
+	return &models.SucessDeleteResponse{
+		Message: message,
+		Links: []models.Link{
+			{
+				Rel:  "Create collection",
+				Href: "/collection/v1",
+			},
+		},
+	}
 }

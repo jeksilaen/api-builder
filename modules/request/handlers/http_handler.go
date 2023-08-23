@@ -12,7 +12,7 @@ import (
 )
 
 func InitRequestHttpHandler(router *gin.Engine) {
-	router.GET("/request/user/v1/:request_id", middlewares.VerifyToken, GetRequestById)
+	router.GET("/request/v1/:request_id", middlewares.VerifyToken, GetRequestById)
 	router.GET("/request/collection/v1/:collection_id", middlewares.VerifyToken, GetRequestByCollection)
 	router.POST("/request/v1", middlewares.VerifyToken, CreateRequest)
 	router.PUT("/request/v1/:request_id", middlewares.VerifyToken, UpdateRequest)

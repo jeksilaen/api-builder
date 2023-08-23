@@ -87,14 +87,14 @@ func UpdateCollection(ctx *gin.Context) {
 	// Decode the request JSON data into Collection object
 	var req models.Collection
 	if err := ctx.BindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedCreateResponse(err.Error()))
+		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedUpdateResponse(err.Error()))
 		return
 	}
 
 	// Validate the request JSON data
 	err := validate.StructPartial(req, "Name")
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedCreateResponse(err.Error()))
+		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedUpdateResponse(err.Error()))
 		return
 	}
 
@@ -111,11 +111,11 @@ func UpdateCollection(ctx *gin.Context) {
 	// Save the updated collection
 	updatedCollection, err := collectionUsecase.UpdateCollection(existingCollection)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedCreateResponse(err.Error()))
+		ctx.JSON(http.StatusBadRequest, helpers.ReturnFailedUpdateResponse(err.Error()))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, helpers.ReturnSucessCreateResponse(updatedCollection))
+	ctx.JSON(http.StatusOK, helpers.ReturnSucessUpdateResponse(updatedCollection))
 }
 
 func DeleteCollection(ctx *gin.Context) {

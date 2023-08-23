@@ -1,16 +1,17 @@
 package usecases
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
 	"log"
-	"strings"	
-	"encoding/json"
 	"net/http"
-	"bytes"
 	"strconv"
+	"strings"
+
 	// "encoding/json"
 	"github.com/jeksilaen/api-builder/db"
-	"github.com/jeksilaen/api-builder/modules/request/models"	
+	"github.com/jeksilaen/api-builder/modules/request/models"
 	"gorm.io/gorm"
 )
 
@@ -65,7 +66,7 @@ func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models
 		return request, nil
 	}
 	if request.Method == "GET" {
-		req, err := http.NewRequest("GET", request.URL, nil)		
+		req, err := http.NewRequest("GET", request.URL, nil)
 
 		// Set the authorization header
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
@@ -89,9 +90,9 @@ func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models
 			errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 			request.Response = errorResponse
 		}
-	} else if request.Method == "POST"{		
+	} else if request.Method == "POST" {
 		payloadJSON, _ := json.Marshal(request.Payload)
-			
+
 		req, err := http.NewRequest("POST", request.URL, bytes.NewBuffer(payloadJSON))
 		if err != nil {
 			return nil, err
@@ -102,24 +103,24 @@ func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models
 		req.Header.Set("Content-Type", "application/json")
 
 		response, err := http.DefaultClient.Do(req)
-		if err != nil {			
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
-			if response.StatusCode == http.StatusOK {				
+			if response.StatusCode == http.StatusOK {
 				var responseData models.JSONMap
 				err := json.NewDecoder(response.Body).Decode(&responseData)
-				if err != nil {					
+				if err != nil {
 					errorResponse := make(models.JSONMap)
 					errorResponse["error"] = "Failed to parse JSON: " + err.Error()
-						
+
 					request.Response = errorResponse
-				} else {					
+				} else {
 					request.Response = responseData
 				}
-			} else {				
+			} else {
 				var responseData models.JSONMap
 				json.NewDecoder(response.Body).Decode(&responseData)
 				request.Response = responseData
@@ -131,60 +132,60 @@ func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models
 			}
 		}
 
-	}else if request.Method == "PUT" || request.Method == "PATCH" {		
-		payloadJSON, _ := json.Marshal(request.Payload)		
-	
+	} else if request.Method == "PUT" || request.Method == "PATCH" {
+		payloadJSON, _ := json.Marshal(request.Payload)
+
 		req, _ := http.NewRequest(request.Method, request.URL, bytes.NewBuffer(payloadJSON))
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
 		req.Header.Set("Content-Type", "application/json")
-		
+
 		client := &http.Client{}
 		response, err := client.Do(req)
-	
-		if err != nil {			
+
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
 			var responseData models.JSONMap
-			
-			json.NewDecoder(response.Body).Decode(&responseData)			
+
+			json.NewDecoder(response.Body).Decode(&responseData)
 			request.Response = responseData
 			if request.Response == nil {
 				errorResponse := make(models.JSONMap)
 				errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 				request.Response = errorResponse
 			}
-		}	
+		}
 
-	} else if request.Method == "DELETE" {		
+	} else if request.Method == "DELETE" {
 		req, err := http.NewRequest("DELETE", request.URL, nil)
-		
+
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
 		client := http.DefaultClient
 		response, err := client.Do(req)
 
-		if err != nil {			
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
 			var responseData models.JSONMap
-			
-			json.NewDecoder(response.Body).Decode(&responseData)			
+
+			json.NewDecoder(response.Body).Decode(&responseData)
 			request.Response = responseData
 			if request.Response == nil {
 				errorResponse := make(models.JSONMap)
 				errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 				request.Response = errorResponse
 			}
-		}		
-	}  else {
+		}
+	} else {
 		return nil, errors.New("Invalid request method for updating, use GET, POST, PUT, or DELETE")
 	}
-	
+
 	err := uc.DB.Create(request).Error
 	if err != nil {
 		if strings.Contains(err.Error(), "invalid input syntax for type uuid") {
@@ -199,16 +200,16 @@ func (uc *RequestCommandUsecase) CreateRequest(request *models.Request) (*models
 }
 
 func (uc *RequestCommandUsecase) GetRequestByIDWithoutPreload(requestID string) (*models.Request, error) {
-    var request models.Request
-    result := uc.DB.Where("id = ?", requestID).First(&request)
-    if result.Error != nil {
-        if result.Error == gorm.ErrRecordNotFound {
-            return nil, errors.New("Request not found")
-        }
-        return nil, result.Error
-    }
+	var request models.Request
+	result := uc.DB.Where("id = ?", requestID).First(&request)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return nil, errors.New("Request not found")
+		}
+		return nil, result.Error
+	}
 
-    return &request, nil
+	return &request, nil
 }
 
 func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models.Request, error) {
@@ -226,7 +227,7 @@ func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models
 		return request, nil
 	}
 	if request.Method == "GET" {
-		req, err := http.NewRequest("GET", request.URL, nil)		
+		req, err := http.NewRequest("GET", request.URL, nil)
 
 		// Set the authorization header
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
@@ -250,9 +251,9 @@ func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models
 			errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 			request.Response = errorResponse
 		}
-	} else if request.Method == "POST"{		
+	} else if request.Method == "POST" {
 		payloadJSON, _ := json.Marshal(request.Payload)
-			
+
 		req, err := http.NewRequest("POST", request.URL, bytes.NewBuffer(payloadJSON))
 		if err != nil {
 			return nil, err
@@ -263,24 +264,24 @@ func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models
 		req.Header.Set("Content-Type", "application/json")
 
 		response, err := http.DefaultClient.Do(req)
-		if err != nil {			
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
-			if response.StatusCode == http.StatusOK {				
+			if response.StatusCode == http.StatusOK {
 				var responseData models.JSONMap
 				err := json.NewDecoder(response.Body).Decode(&responseData)
-				if err != nil {					
+				if err != nil {
 					errorResponse := make(models.JSONMap)
 					errorResponse["error"] = "Failed to parse JSON: " + err.Error()
-						
+
 					request.Response = errorResponse
-				} else {					
+				} else {
 					request.Response = responseData
 				}
-			} else {				
+			} else {
 				var responseData models.JSONMap
 				json.NewDecoder(response.Body).Decode(&responseData)
 				request.Response = responseData
@@ -292,60 +293,60 @@ func (uc *RequestCommandUsecase) UpdateRequest(request *models.Request) (*models
 			}
 		}
 
-	}else if request.Method == "PUT" || request.Method == "PATCH" {		
-		payloadJSON, _ := json.Marshal(request.Payload)		
-	
+	} else if request.Method == "PUT" || request.Method == "PATCH" {
+		payloadJSON, _ := json.Marshal(request.Payload)
+
 		req, _ := http.NewRequest(request.Method, request.URL, bytes.NewBuffer(payloadJSON))
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
 		req.Header.Set("Content-Type", "application/json")
-		
+
 		client := &http.Client{}
 		response, err := client.Do(req)
-	
-		if err != nil {			
+
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
 			var responseData models.JSONMap
-			
-			json.NewDecoder(response.Body).Decode(&responseData)			
+
+			json.NewDecoder(response.Body).Decode(&responseData)
 			request.Response = responseData
 			if request.Response == nil {
 				errorResponse := make(models.JSONMap)
 				errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 				request.Response = errorResponse
 			}
-		}	
+		}
 
-	} else if request.Method == "DELETE" {		
+	} else if request.Method == "DELETE" {
 		req, err := http.NewRequest("DELETE", request.URL, nil)
-		
+
 		req.Header.Set("Authorization", "Bearer "+request.BearerToken)
 		client := http.DefaultClient
 		response, err := client.Do(req)
 
-		if err != nil {			
+		if err != nil {
 			errorResponse := make(models.JSONMap)
 			errorResponse["error"] = "Failed to fetch URL: " + err.Error()
-				
+
 			request.Response = errorResponse
 		} else {
 			var responseData models.JSONMap
-			
-			json.NewDecoder(response.Body).Decode(&responseData)			
+
+			json.NewDecoder(response.Body).Decode(&responseData)
 			request.Response = responseData
 			if request.Response == nil {
 				errorResponse := make(models.JSONMap)
 				errorResponse["error"] = "Invalid status code: " + strconv.Itoa(response.StatusCode)
 				request.Response = errorResponse
 			}
-		}		
-	}  else {
+		}
+	} else {
 		return nil, errors.New("Invalid request method for updating, use GET, POST, PUT, or DELETE")
 	}
-		
+
 	err := uc.DB.Save(request).Error
 	if err != nil {
 		return nil, err
