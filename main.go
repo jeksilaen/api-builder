@@ -4,6 +4,7 @@ import (
 	// "log"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	db "github.com/jeksilaen/api-builder/db"
 	middlewares "github.com/jeksilaen/api-builder/middlewares"
@@ -25,6 +26,7 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Use(cors.Default())
 	router.Use(middlewares.SetJSONContentTypeMiddleware())
 
 	userHandler.InitUserHttpHandler(router)
