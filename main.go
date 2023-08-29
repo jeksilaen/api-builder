@@ -26,7 +26,11 @@ func main() {
 	}
 
 	router := gin.Default()
-	router.Use(cors.Default())
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowHeaders = append(corsConfig.AllowHeaders, "Authorization")
+	router.Use(cors.New(corsConfig))
+
 	router.Use(middlewares.SetJSONContentTypeMiddleware())
 
 	userHandler.InitUserHttpHandler(router)
