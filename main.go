@@ -11,7 +11,9 @@ import (
 	collectionHandler "github.com/jeksilaen/api-builder/modules/collection/handlers"
 	requestHandler "github.com/jeksilaen/api-builder/modules/request/handlers"
 	userHandler "github.com/jeksilaen/api-builder/modules/user/handlers"
+
 	// "github.com/joho/godotenv"
+	"net/http"
 )
 
 func main() {
@@ -19,6 +21,10 @@ func main() {
 	// if err != nil {
 	// 	log.Fatal("Error loading .env file")
 	// }
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+	})
 
 	err := db.InitDB()
 	if err != nil {
