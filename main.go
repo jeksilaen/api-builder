@@ -4,16 +4,13 @@ import (
 	// "log"
 	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	db "github.com/jeksilaen/api-builder/db"
 	middlewares "github.com/jeksilaen/api-builder/middlewares"
 	collectionHandler "github.com/jeksilaen/api-builder/modules/collection/handlers"
 	requestHandler "github.com/jeksilaen/api-builder/modules/request/handlers"
 	userHandler "github.com/jeksilaen/api-builder/modules/user/handlers"
-
 	// "github.com/joho/godotenv"
-	"net/http"
 )
 
 func main() {
@@ -22,10 +19,6 @@ func main() {
 	// 	log.Fatal("Error loading .env file")
 	// }
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-	})
-
 	err := db.InitDB()
 	if err != nil {
 		panic(err)
@@ -33,10 +26,18 @@ func main() {
 
 	router := gin.Default()
 
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowHeaders = append(corsConfig.AllowHeaders, "Authorization")
-	router.Use(cors.New(corsConfig))
+	router.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "*")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+			return
+		}
+		c.Next()
+	})
 
+	// router.Use(cors.Default())
 	router.Use(middlewares.SetJSONContentTypeMiddleware())
 
 	userHandler.InitUserHttpHandler(router)
